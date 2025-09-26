@@ -233,6 +233,7 @@ export default defineConfig(({ mode }) => {
             {
               action: "/",
               accept: {
+                "application/vnd.kroolo+json": [".kroolo"],
                 "application/vnd.excalidraw+json": [".excalidraw"],
               },
             },
@@ -246,8 +247,10 @@ export default defineConfig(({ mode }) => {
                 {
                   name: "file",
                   accept: [
+                    "application/vnd.kroolo+json",
                     "application/vnd.excalidraw+json",
                     "application/json",
+                    ".kroolo",
                     ".excalidraw",
                   ],
                 },

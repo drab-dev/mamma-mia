@@ -32,7 +32,7 @@ export const encodePngMetadata = async ({
   const chunks = decodePng(new Uint8Array(await blobToArrayBuffer(blob)));
 
   const metadataChunk = tEXt.encode(
-    MIME_TYPES.excalidraw,
+    MIME_TYPES.kroolo,
     JSON.stringify(
       encode({
         text: metadata,
@@ -48,7 +48,7 @@ export const encodePngMetadata = async ({
 
 export const decodePngMetadata = async (blob: Blob) => {
   const metadata = await getTEXtChunk(blob);
-  if (metadata?.keyword === MIME_TYPES.excalidraw) {
+  if (metadata?.keyword === MIME_TYPES.kroolo || metadata?.keyword === MIME_TYPES.excalidraw) {
     try {
       const encodedData = JSON.parse(metadata.text);
       if (!("encoded" in encodedData)) {

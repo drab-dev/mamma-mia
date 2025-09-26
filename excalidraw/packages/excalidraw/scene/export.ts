@@ -510,7 +510,7 @@ export const encodeSvgBase64Payload = ({
   );
 
   metadataElement.appendChild(
-    createHTMLComment(`payload-type:${MIME_TYPES.excalidraw}`),
+    createHTMLComment(`payload-type:${MIME_TYPES.kroolo}`),
   );
   metadataElement.appendChild(createHTMLComment("payload-version:2"));
   metadataElement.appendChild(createHTMLComment("payload-start"));
@@ -519,7 +519,7 @@ export const encodeSvgBase64Payload = ({
 };
 
 export const decodeSvgBase64Payload = ({ svg }: { svg: string }) => {
-  if (svg.includes(`payload-type:${MIME_TYPES.excalidraw}`)) {
+  if (svg.includes(`payload-type:${MIME_TYPES.excalidraw}`) || svg.includes(`payload-type:${MIME_TYPES.kroolo}`)) {
     const match = svg.match(
       /<!-- payload-start -->\s*(.+?)\s*<!-- payload-end -->/,
     );
