@@ -89,8 +89,8 @@ export const saveAsJSON = async (
 
   const fileHandle = await fileSave(blob, {
     name,
-    extension: "excalidraw",
-    description: "Excalidraw file",
+    extension: "kroolo",
+    description: "Kroolo file",
     fileHandle: isImageFileHandle(appState.fileHandle)
       ? null
       : appState.fileHandle,
@@ -103,10 +103,10 @@ export const loadFromJSON = async (
   localElements: readonly ExcalidrawElement[] | null,
 ) => {
   const file = await fileOpen({
-    description: "Excalidraw files",
+    description: "Kroolo files",
     // ToDo: Be over-permissive until https://bugs.webkit.org/show_bug.cgi?id=34442
-    // gets resolved. Else, iOS users cannot open `.excalidraw` files.
-    // extensions: ["json", "excalidraw", "png", "svg"],
+    // gets resolved. Else, iOS users cannot open `.kroolo` files.
+    // extensions: ["json", "kroolo", "excalidraw", "png", "svg"],
   });
   return loadFromBlob(
     await normalizeFile(file),
@@ -152,12 +152,12 @@ export const saveLibraryAsJSON = async (libraryItems: LibraryItems) => {
   const serialized = serializeLibraryAsJSON(libraryItems);
   await fileSave(
     new Blob([serialized], {
-      type: MIME_TYPES.excalidrawlib,
+      type: MIME_TYPES.kroololib,
     }),
     {
       name: "library",
-      extension: "excalidrawlib",
-      description: "Excalidraw library file",
+      extension: "kroololib",
+      description: "Kroolo library file",
     },
   );
 };

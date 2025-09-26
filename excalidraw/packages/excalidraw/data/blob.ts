@@ -96,8 +96,14 @@ export const getMimeType = (blob: Blob | string): string => {
     return MIME_TYPES.jpg;
   } else if (/\.svg$/.test(name)) {
     return MIME_TYPES.svg;
+  } else if (/\.kroololib$/.test(name)) {
+    return MIME_TYPES.kroololib;
   } else if (/\.excalidrawlib$/.test(name)) {
     return MIME_TYPES.excalidrawlib;
+  } else if (/\.kroolo$/.test(name)) {
+    return MIME_TYPES.kroolo;
+  } else if (/\.excalidraw$/.test(name)) {
+    return MIME_TYPES.excalidraw;
   }
   return "";
 };
@@ -107,7 +113,7 @@ export const getFileHandleType = (handle: FileSystemHandle | null) => {
     return null;
   }
 
-  return handle.name.match(/\.(json|excalidraw|png|svg)$/)?.[1] || null;
+  return handle.name.match(/\.(json|kroolo|excalidraw|png|svg)$/)?.[1] || null;
 };
 
 export const isImageFileHandleType = (
@@ -456,16 +462,16 @@ export const createFile = (
 
 /** attempts to detect correct mimeType if none is set, or if an image
  * has an incorrect extension.
- * Note: doesn't handle missing .excalidraw/.excalidrawlib extension  */
+ * Note: doesn't handle missing .kroolo/.kroololib extension  */
 export const normalizeFile = async (file: File) => {
   if (!file.type) {
-    if (file?.name?.endsWith(".excalidrawlib")) {
+    if (file?.name?.endsWith(".kroololib") || file?.name?.endsWith(".excalidrawlib")) {
       file = createFile(
         await blobToArrayBuffer(file),
         MIME_TYPES.excalidrawlib,
         file.name,
       );
-    } else if (file?.name?.endsWith(".excalidraw")) {
+    } else if (file?.name?.endsWith(".kroolo") || file?.name?.endsWith(".excalidraw")) {
       file = createFile(
         await blobToArrayBuffer(file),
         MIME_TYPES.excalidraw,

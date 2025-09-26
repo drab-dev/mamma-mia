@@ -264,16 +264,21 @@ export const STRING_MIME_TYPES = {
   text: "text/plain",
   html: "text/html",
   json: "application/json",
-  // excalidraw data
-  excalidraw: "application/vnd.excalidraw+json",
-  excalidrawlib: "application/vnd.excalidrawlib+json",
+  // kroolo data (maintaining backward compatibility)
+  excalidraw: "application/vnd.kroolo+json",
+  excalidrawlib: "application/vnd.kroololib+json",
 } as const;
 
 export const MIME_TYPES = {
   ...STRING_MIME_TYPES,
-  // image-encoded excalidraw data
-  "excalidraw.svg": "image/svg+xml",
-  "excalidraw.png": "image/png",
+  // kroolo file extensions
+  kroolo: "application/vnd.kroolo+json",
+  excalidraw: "application/vnd.excalidraw+json", // backward compatibility
+  kroololib: "application/vnd.kroololib+json",
+  excalidrawlib: "application/vnd.excalidrawlib+json", // backward compatibility
+  // image-encoded kroolo data
+  "kroolo.svg": "image/svg+xml",
+  "kroolo.png": "image/png",
   // binary
   binary: "application/octet-stream",
   // image
@@ -293,10 +298,10 @@ export const EXPORT_IMAGE_TYPES = {
 } as const;
 
 export const EXPORT_DATA_TYPES = {
-  excalidraw: "excalidraw",
-  excalidrawClipboard: "excalidraw/clipboard",
-  excalidrawLibrary: "excalidrawlib",
-  excalidrawClipboardWithAPI: "excalidraw-api/clipboard",
+  excalidraw: "kroolo",
+  excalidrawClipboard: "kroolo/clipboard",
+  excalidrawLibrary: "kroololib",
+  excalidrawClipboardWithAPI: "kroolo-api/clipboard",
 } as const;
 
 export const getExportSource = () =>
