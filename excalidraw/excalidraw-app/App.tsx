@@ -93,6 +93,10 @@ import Collab, {
   isOfflineAtom,
 } from "./collab/Collab";
 import { AppFooter } from "./components/AppFooter";
+import { useVersioning } from "./components/versioning/useVersioning";
+import { SaveVersionButton } from "./components/versioning/SaveVersionButton";
+import { VersionDropdown } from "./components/versioning/VersionDropdown";
+import { VersionToast } from "./components/versioning/VersionToast";
 import { AppMainMenu } from "./components/AppMainMenu";
 import { AppWelcomeScreen } from "./components/AppWelcomeScreen";
 import {
@@ -726,6 +730,15 @@ const ExcalidrawWrapper = () => {
   };
 
   const isOffline = useAtomValue(isOfflineAtom);
+  // Versioning ----------------------------------------------------------------
+  const versioning = useVersioning(excalidrawAPI || null);
+  const [showVersions, setShowVersions] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  useEffect(() => {
+    if (versioning.lastSavedId) {
+      setShowToast(true);
+    }
+  }, [versioning.lastSavedId]);
 
   const onCollabDialogOpen = useCallback(
     () => setShareDialogState({ isOpen: true, type: "collaborationOnly" }),
@@ -846,13 +859,31 @@ const ExcalidrawWrapper = () => {
             return null;
           }
           return (
-            <div className="top-right-ui">
-              {collabError.message && <CollabError collabError={collabError} />}
-              <LiveCollaborationTrigger
-                isCollaborating={isCollaborating}
-                onSelect={() =>
-                  setShareDialogState({ isOpen: true, type: "share" })
-                }
+            <div
+              className="top-right-ui"
+              style={{ display: "flex", flexDirection: "column", gap: 6 }}
+            >
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                {collabError.message && (
+                  <CollabError collabError={collabError} />
+                )}
+                <LiveCollaborationTrigger
+                  isCollaborating={isCollaborating}
+                  onSelect={() =>
+                    setShareDialogState({ isOpen: true, type: "share" })
+                  }
+                />
+              </div>
+              {excalidrawAPI && (
+                <SaveVersionButton
+                  api={versioning}
+                  onToggleList={() => setShowVersions((p) => !p)}
+                />
+              )}
+              <VersionDropdown
+                api={versioning}
+                isOpen={showVersions}
+                onClose={() => setShowVersions(false)}
               />
             </div>
           );
@@ -1133,6 +1164,12 @@ const ExcalidrawWrapper = () => {
             appState={excalidrawAPI.getAppState()}
             scale={window.devicePixelRatio}
             ref={debugCanvasRef}
+          />
+        )}
+        {showToast && (
+          <VersionToast
+            message="Version saved"
+            onDone={() => setShowToast(false)}
           />
         )}
       </Excalidraw>
