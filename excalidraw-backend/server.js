@@ -15,7 +15,8 @@ app.use(
   cors({
     origin: [
       "http://127.0.0.1:3000", // Vite dev server
-      "http://localhost:3000", // just in case
+      "http://localhost:3000",
+      "https://mamma-mia-1-w1t9.onrender.com", // just in case
     ],
     credentials: true,
   })
